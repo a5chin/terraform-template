@@ -1,0 +1,16 @@
+{
+    "recommendations": [
+        "codezombiech.gitignore",
+        "eamodio.gitlens",
+        "exiasr.hadolint",
+        "mosapride.zenkaku",
+        "ms-azuretools.vscode-docker",
+        "ms-vscode-remote.remote-containers",
+        "oderwat.indent-rainbow",
+        "pkief.material-icon-theme",
+        "redhat.vscode-yaml",
+        "shardulm94.trailing-spaces",
+        "usernamehw.errorlens",
+        "yzhang.markdown-all-in-one",
+    ]
+}

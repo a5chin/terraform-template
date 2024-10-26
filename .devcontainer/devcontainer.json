@@ -1,0 +1,42 @@
+{
+    "name": "Terraform",
+    "build": {
+        "context": "..",
+        "dockerfile": "Dockerfile"
+    },
+    "features": {
+        "terraform": {
+            "version": "1.9.8"
+        },
+        "ghcr.io/devcontainers-extra/features/pre-commit:2": {},
+        "ghcr.io/devcontainers-extra/features/terraform-docs:1": {},
+        "ghcr.io/dhoeric/features/hadolint:1": {}
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "codezombiech.gitignore",
+                "eamodio.gitlens",
+                "exiasr.hadolint",
+                "mosapride.zenkaku",
+                "ms-azuretools.vscode-docker",
+                "oderwat.indent-rainbow",
+                "pkief.material-icon-theme",
+                "redhat.vscode-yaml",
+                "shardulm94.trailing-spaces",
+                "usernamehw.errorlens",
+                "yzhang.markdown-all-in-one"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "zsh",
+                "terminal.integrated.profiles.linux": {
+                    "zsh": {
+                        "path": "/bin/zsh"
+                    }
+                }
+            }
+        }
+    },
+    "postStartCommand": "pre-commit install",
+    "remoteUser": "vscode"
+}
