@@ -18,7 +18,6 @@ variable "dataflow" {
       parameters = object({
         instanceId = string
         databaseId = string
-        inputDir   = string
         subnetwork = string
       })
       sa = object({
@@ -56,25 +55,17 @@ variable "functions" {
 variable "gcs" {
   description = "The GCS parameters to receive aggregate data"
   type = object({
-    lifecycle_rule = object({
-      age    = number
-      action = string
-    })
-  })
-  default = {
-    lifecycle_rule = {
-      age    = 90
-      action = "Delete"
-    }
-  }
-}
-
-variable "resource" {
-  description = "Service account for the resource storing the data"
-  type = object({
-    sa = object({
-      email = string
-    })
+    name = string
+    lifecycle_rule = optional(
+      object({
+        age    = number
+        action = string
+        }), {
+        age    = 90
+        action = "Delete"
+      }
+    )
+    allows = set(string)
   })
 }
 

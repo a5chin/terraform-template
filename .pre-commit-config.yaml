@@ -8,3 +8,17 @@ repos:
         name: terraform-fmt
         description: "Run 'terraform fmt' for format"
         args: [recursive]
+
+  - repo: https://github.com/terraform-docs/terraform-docs
+    rev: "v0.18.0"
+    hooks:
+      - id: terraform-docs-go
+        name: terraform-docs-gcs2spanner
+        args:
+          [
+            "markdown",
+            "table",
+            "--output-file",
+            "./README.md",
+            "./modules/gcs2spanner/",
+          ]

@@ -1,5 +1,9 @@
 locals {
   filename = "00000.zip"
+  functions_roles = toset([
+    "roles/iam.serviceAccountUser",
+    "roles/dataflow.developer"
+  ])
 }
 
 resource "google_cloudfunctions2_function" "main" {
@@ -54,6 +58,16 @@ resource "google_cloudfunctions2_function" "main" {
   ]
 }
 
+resource "google_storage_bucket" "functions" {
+  name                        = var.functions.bucket
+  location                    = var.location
+  force_destroy               = false
+  public_access_prevention    = "enforced"
+  uniform_bucket_level_access = true
+
+  depends_on = [google_project_service.main]
+}
+
 data "archive_file" "functions" {
   type        = "zip"
   source_dir  = "${path.module}/src"
@@ -64,6 +78,23 @@ resource "google_storage_bucket_object" "functions" {
   name   = "gcs2spanner/${local.filename}"
   source = data.archive_file.functions.output_path
   bucket = var.functions.bucket
+
+  depends_on = [google_project_service.main]
+}
+
+resource "google_service_account" "functions" {
+  account_id   = var.functions.sa.id
+  display_name = "The service account for the Cloud Functions"
+
+  depends_on = [google_project_service.main]
+}
+
+resource "google_project_iam_member" "functions" {
+  for_each = local.functions_roles
+  member   = "serviceAccount:${google_service_account.functions.email}"
+
+  project = data.google_project.main.project_id
+  role    = each.value
 
   depends_on = [google_project_service.main]
 }
