@@ -1,5 +1,5 @@
 locals {
-  resource_roles = toset([
+  gcs_roles = toset([
     "roles/storage.insightsCollectorService",
     "roles/storage.objectUser"
   ])
@@ -24,12 +24,14 @@ resource "google_storage_bucket" "data" {
   depends_on = [google_project_service.main]
 }
 
-resource "google_storage_bucket_iam_member" "gcs" {
-  for_each = local.resource_roles
-  member   = var.gcs.allows
+resource "google_storage_bucket_iam_member" "data" {
+  for_each = {
+    for v in setproduct(var.gcs.allows, local.gcs_roles) : join(":", v) => v
+  }
+  member = each.value[0]
+  role   = each.value[1]
 
   bucket = google_storage_bucket.data.name
-  role   = each.value
 
   depends_on = [google_project_service.main]
 }
