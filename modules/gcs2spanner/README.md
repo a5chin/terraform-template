@@ -4,6 +4,7 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.7 |
+| <a name="requirement_archive"></a> [archive](#requirement\_archive) | >=2.4.0 |
 | <a name="requirement_google"></a> [google](#requirement\_google) | >= 5.22.0 |
 | <a name="requirement_google-beta"></a> [google-beta](#requirement\_google-beta) | >= 5.22.0 |
 
@@ -11,7 +12,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_archive"></a> [archive](#provider\_archive) | n/a |
+| <a name="provider_archive"></a> [archive](#provider\_archive) | >=2.4.0 |
 | <a name="provider_google"></a> [google](#provider\_google) | >= 5.22.0 |
 | <a name="provider_google-beta"></a> [google-beta](#provider\_google-beta) | >= 5.22.0 |
 
@@ -40,7 +41,7 @@ No modules.
 | [google_storage_bucket.functions](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket) | resource |
 | [google_storage_bucket_iam_member.gcs](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket_iam_member) | resource |
 | [google_storage_bucket_object.functions](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket_object) | resource |
-| [archive_file.functions](https://registry.terraform.io/providers/hashicorp/archive/latest/docs/data-sources/file) | data source |
+| [archive_file.functions](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/file) | data source |
 | [google_project.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/project) | data source |
 
 ## Inputs
