@@ -22,3 +22,17 @@ repos:
             "./README.md",
             "./modules/gcs2spanner/",
           ]
+
+  - repo: https://github.com/terraform-docs/terraform-docs
+    rev: "v0.18.0"
+    hooks:
+      - id: terraform-docs-go
+        name: terraform-docs-microservices
+        args:
+          [
+            "markdown",
+            "table",
+            "--output-file",
+            "./README.md",
+            "./modules/microservices/",
+          ]
