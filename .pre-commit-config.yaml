@@ -27,6 +27,20 @@ repos:
     rev: "v0.18.0"
     hooks:
       - id: terraform-docs-go
+        name: terraform-docs-log2bq
+        args:
+          [
+            "markdown",
+            "table",
+            "--output-file",
+            "./README.md",
+            "./modules/log2bq/",
+          ]
+
+  - repo: https://github.com/terraform-docs/terraform-docs
+    rev: "v0.18.0"
+    hooks:
+      - id: terraform-docs-go
         name: terraform-docs-monitoring-tools
         args:
           [
