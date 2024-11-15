@@ -1,4 +1,4 @@
 locals {
-  project_id = "project=id"
+  project_id = "project_id"
   location   = "location"
 }
