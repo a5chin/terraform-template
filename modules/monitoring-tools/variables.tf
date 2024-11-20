@@ -35,6 +35,10 @@ variable "target" {
     condition     = var.target.filter == "" ? true : startswith(var.target.filter, "AND ")
     error_message = "`var.target.filter` must start with `AND `."
   }
+  validation {
+    condition     = alltrue([for alert in var.target.alert : startswith(alert.channel, "#")])
+    error_message = "`var.target.alert['*'].channel` must start with `#`."
+  }
 }
 
 variable "secrets" {

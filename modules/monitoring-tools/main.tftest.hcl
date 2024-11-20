@@ -111,6 +111,42 @@ run "valid_no_filter" {
   }
 }
 
+run "invalid_label" {
+  module {
+    source = "./"
+  }
+
+  variables {
+    project_id = "project_id"
+
+    target = {
+      title         = "Title"
+      metric        = "xxx.googleapis.com/xxx/xxx"
+      resource_type = "xxx"
+      label         = "resource.xxx"
+      name          = "xxx"
+      filter        = "AND xxx = xxx"
+      reducer       = "REDUCE_NONE"
+      aligner       = "ALIGN_DELTA"
+      alert = {
+        "warn" = {
+          channel = "#warn"
+          window  = "300s"
+          value   = 0.65
+        }
+      }
+    }
+
+    secrets = "auth_token: xoxb-xxx"
+  }
+
+  command = plan
+
+  expect_failures = [
+    var.target.label,
+  ]
+}
+
 run "invalid_filter" {
   module {
     source = "./"
@@ -147,7 +183,7 @@ run "invalid_filter" {
   ]
 }
 
-run "invalid_label" {
+run "invalid_channel" {
   module {
     source = "./"
   }
@@ -159,16 +195,21 @@ run "invalid_label" {
       title         = "Title"
       metric        = "xxx.googleapis.com/xxx/xxx"
       resource_type = "xxx"
-      label         = "resource.xxx"
+      label         = "resource.labels.xxx"
       name          = "xxx"
       filter        = "AND xxx = xxx"
       reducer       = "REDUCE_NONE"
       aligner       = "ALIGN_DELTA"
       alert = {
         "error" = {
-          channel = "#warn"
+          channel = "error"
           window  = "300s"
-          value   = 0.65
+          value   = 0.95
+        }
+        "warn" = {
+          channel = "warn"
+          window  = "300s"
+          value   = 0.8
         }
       }
     }
@@ -179,6 +220,7 @@ run "invalid_label" {
   command = plan
 
   expect_failures = [
-    var.target.label,
+    var.target.alert["error"].channel,
+    var.target.alert["warn"].channel,
   ]
 }
