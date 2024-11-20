@@ -3,11 +3,6 @@ variable "project_id" {
   type        = string
 }
 
-variable "location" {
-  description = "The location of the resource."
-  type        = string
-}
-
 variable "target" {
   description = <<EOF
     The target information for monitoring.
@@ -24,18 +19,14 @@ variable "target" {
     reducer       = string
     aligner       = string
     base_value    = optional(number, 1)
-    threshold = map(
+    alert = map(
       object({
-        value  = number
-        window = string
+        channel = string
+        window  = string
+        value   = number
       })
     )
   })
-}
-
-variable "channels" {
-  description = "Channel variable that contains `error` and `warn` as keys"
-  type        = map(string)
 }
 
 variable "secrets" {

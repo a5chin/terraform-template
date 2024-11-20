@@ -2,7 +2,6 @@ locals {
   apis = toset([
     "monitoring.googleapis.com",
   ])
-  levels = toset(keys(var.target.threshold))
 }
 
 data "google_project" "main" {}

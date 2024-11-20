@@ -6,8 +6,10 @@ locals {
 }
 
 resource "google_storage_bucket" "data" {
+  project  = var.project_id
+  location = var.location
+
   name                        = var.gcs.name
-  location                    = var.location
   force_destroy               = false
   public_access_prevention    = "enforced"
   uniform_bucket_level_access = true

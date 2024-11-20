@@ -7,8 +7,10 @@ locals {
 }
 
 resource "google_cloudfunctions2_function" "main" {
-  name     = var.functions.name
+  project  = var.project_id
   location = var.location
+
+  name = var.functions.name
 
   build_config {
     runtime     = "python310"
@@ -59,8 +61,10 @@ resource "google_cloudfunctions2_function" "main" {
 }
 
 resource "google_storage_bucket" "functions" {
+  project  = var.project_id
+  location = var.location
+
   name                        = var.functions.bucket
-  location                    = var.location
   force_destroy               = false
   public_access_prevention    = "enforced"
   uniform_bucket_level_access = true

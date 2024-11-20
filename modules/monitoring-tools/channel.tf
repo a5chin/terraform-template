@@ -1,11 +1,11 @@
 resource "google_monitoring_notification_channel" "main" {
-  for_each = local.levels
+  for_each = var.target.alert
 
   display_name = upper(each.key)
   type         = "slack"
 
   labels = {
-    channel_name = each.value
+    channel_name = each.value.channel
   }
 
   sensitive_labels {

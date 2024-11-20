@@ -11,18 +11,16 @@ variable "location" {
 variable "dataflow" {
   description = "The Dataflow parameters"
   type = object({
-    dataflow = object({
-      name              = string
-      gcsPath           = optional(string, "gs://dataflow-templates/2024-01-30-01_RC00/GCS_Avro_to_Cloud_Spanner")
-      temp_gcs_location = string
-      parameters = object({
-        instanceId = string
-        databaseId = string
-        subnetwork = string
-      })
-      sa = object({
-        id = string
-      })
+    name              = string
+    gcsPath           = optional(string, "gs://dataflow-templates/2024-01-30-01_RC00/GCS_Avro_to_Cloud_Spanner")
+    temp_gcs_location = string
+    parameters = object({
+      instanceId = string
+      databaseId = string
+      subnetwork = string
+    })
+    sa = object({
+      id = string
     })
   })
 }

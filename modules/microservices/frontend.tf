@@ -73,7 +73,7 @@ resource "google_service_account" "frontend_executor" {
 }
 
 resource "google_project_iam_member" "frontend_executor" {
-  for_each = var.project_id.executor.roles
+  for_each = var.frontend.executor.roles
   project  = var.project_id
   role     = each.value
   member   = "serviceAccount:${google_service_account.frontend_executor.email}"

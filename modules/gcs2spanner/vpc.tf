@@ -10,7 +10,7 @@ resource "google_compute_subnetwork" "dataflow" {
   region  = var.location
 
   name                       = var.vpc.subnetwork.name
-  ip_cidr_range              = var.vpc.ip_cidr_range
+  ip_cidr_range              = var.vpc.subnetwork.ip_cidr_range
   network                    = google_compute_network.dataflow.self_link
   purpose                    = "PRIVATE"
   stack_type                 = "IPV4_ONLY"

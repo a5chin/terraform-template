@@ -4,15 +4,13 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.7 |
-| <a name="requirement_archive"></a> [archive](#requirement\_archive) | >=2.4.0 |
 | <a name="requirement_google"></a> [google](#requirement\_google) | >= 5.22.0 |
-| <a name="requirement_google-beta"></a> [google-beta](#requirement\_google-beta) | >= 5.22.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | >= 5.22.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | 6.12.0 |
 
 ## Modules
 
@@ -33,8 +31,8 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_bigquery"></a> [bigquery](#input\_bigquery) | The bigquery settings | <pre>object({<br>    dataset         = string<br>    table           = string<br>    view            = string<br>    expiration_days = number<br>  })</pre> | n/a | yes |
-| <a name="input_logging"></a> [logging](#input\_logging) | n/a | <pre>object({<br>    target = string<br>    filter = string<br>  })</pre> | n/a | yes |
+| <a name="input_bigquery"></a> [bigquery](#input\_bigquery) | The bigquery settings | <pre>object({<br/>    dataset         = string<br/>    table           = string<br/>    view            = string<br/>    expiration_days = number<br/>  })</pre> | n/a | yes |
+| <a name="input_logging"></a> [logging](#input\_logging) | n/a | <pre>object({<br/>    target = string<br/>    filter = string<br/>  })</pre> | n/a | yes |
 
 ## Outputs
 

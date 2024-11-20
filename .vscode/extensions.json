@@ -1,5 +1,6 @@
 {
     "recommendations": [
+        "aquasecurityofficial.trivy-vulnerability-scanner",
         "codezombiech.gitignore",
         "eamodio.gitlens",
         "exiasr.hadolint",

@@ -1,21 +1,23 @@
 resource "google_monitoring_alert_policy" "main" {
-  for_each = local.levels
+  for_each = var.target.alert
 
-  display_name = "[${upper(each.value)}] ${var.target.name} ${var.target.title}"
+  project = var.project_id
+
+  display_name = "[${upper(each.key)}] ${var.target.name} ${var.target.title}"
 
   conditions {
-    display_name = "[${upper(each.value)}] ${var.target.name} - ${var.target.title}"
+    display_name = "[${upper(each.key)}] ${var.target.name} - ${var.target.title}"
 
     condition_threshold {
       filter = <<EOF
         metric.type = "${var.target.metric}"
         AND resource.type = "${var.target.resource_type}"
         AND ${var.target.label} = ${var.target.name}
-        AND ${var.target.filter}
+        ${var.target.filter}
       EOF
 
       aggregations {
-        alignment_period     = var.target.threshold[each.value].window
+        alignment_period     = each.value.window
         cross_series_reducer = var.target.reducer
         per_series_aligner   = var.target.aligner
       }
@@ -26,8 +28,8 @@ resource "google_monitoring_alert_policy" "main" {
 
       threshold_value = (
         var.target.base_value == 1 ?
-        var.target.threshold[each.value].value :
-        floor(var.target.base_value * var.target.threshold[each.value].value)
+        each.value.value :
+        floor(var.target.base_value * each.value.value)
       )
 
       comparison = "COMPARISON_GT"
