@@ -97,7 +97,7 @@ resource "google_project_iam_member" "functions" {
   for_each = local.functions_roles
   member   = "serviceAccount:${google_service_account.functions.email}"
 
-  project = data.google_project.main.project_id
+  project = var.project_id
   role    = each.value
 
   depends_on = [google_project_service.main]

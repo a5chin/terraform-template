@@ -12,9 +12,9 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_archive"></a> [archive](#provider\_archive) | 2.6.0 |
-| <a name="provider_google"></a> [google](#provider\_google) | 6.12.0 |
-| <a name="provider_google-beta"></a> [google-beta](#provider\_google-beta) | 6.12.0 |
+| <a name="provider_archive"></a> [archive](#provider\_archive) | >=2.4.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | >= 5.22.0 |
+| <a name="provider_google-beta"></a> [google-beta](#provider\_google-beta) | >= 5.22.0 |
 
 ## Modules
 
