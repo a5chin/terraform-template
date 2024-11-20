@@ -15,7 +15,7 @@ variable "target" {
     resource_type = string
     label         = string
     name          = string
-    filter        = string
+    filter        = optional(string, "")
     reducer       = string
     aligner       = string
     base_value    = optional(number, 1)
@@ -27,6 +27,14 @@ variable "target" {
       })
     )
   })
+  validation {
+    condition     = startswith(var.target.label, "resource.labels.")
+    error_message = "`var.target.label` must start with `resource.labels.`."
+  }
+  validation {
+    condition     = var.target.filter == "" ? true : startswith(var.target.filter, "AND ")
+    error_message = "`var.target.filter` must start with `AND `."
+  }
 }
 
 variable "secrets" {

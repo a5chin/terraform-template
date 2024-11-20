@@ -2,7 +2,9 @@ name: Terraform
 
 on:
   pull_request:
+    branches: [main]
   push:
+    branches: [main]
 
 jobs:
   setup:
@@ -91,6 +93,14 @@ jobs:
   validate:
     runs-on: ubuntu-latest
 
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.setup.outputs.matrix) }}
+
+    defaults:
+      run:
+        working-directory: modules/${{ matrix.modules }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -101,4 +111,6 @@ jobs:
           terraform_version: 1.9.8
 
       - name: Terraform validate
-        run: terraform validate
+        run: |
+          terraform init
+          terraform validate
