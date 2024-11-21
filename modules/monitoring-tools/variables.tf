@@ -3,11 +3,6 @@ variable "project_id" {
   type        = string
 }
 
-variable "location" {
-  description = "The location of the resource."
-  type        = string
-}
-
 variable "target" {
   description = <<EOF
     The target information for monitoring.
@@ -20,22 +15,30 @@ variable "target" {
     resource_type = string
     label         = string
     name          = string
-    filter        = string
+    filter        = optional(string, "")
     reducer       = string
     aligner       = string
     base_value    = optional(number, 1)
-    threshold = map(
+    alert = map(
       object({
-        value  = number
-        window = string
+        channel = string
+        window  = string
+        value   = number
       })
     )
   })
-}
-
-variable "channels" {
-  description = "Channel variable that contains `error` and `warn` as keys"
-  type        = map(string)
+  validation {
+    condition     = startswith(var.target.label, "resource.labels.")
+    error_message = "`var.target.label` must start with `resource.labels.`."
+  }
+  validation {
+    condition     = var.target.filter == "" ? true : startswith(var.target.filter, "AND ")
+    error_message = "`var.target.filter` must start with `AND `."
+  }
+  validation {
+    condition     = alltrue([for alert in var.target.alert : startswith(alert.channel, "#")])
+    error_message = "`var.target.alert['*'].channel` must start with `#`."
+  }
 }
 
 variable "secrets" {

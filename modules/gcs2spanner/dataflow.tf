@@ -30,7 +30,7 @@ resource "google_project_iam_member" "dataflow" {
   for_each = local.dataflow_roles
   member   = "serviceAccount:${google_service_account.dataflow.email}"
 
-  project = data.google_project.main.project_id
+  project = var.project_id
   role    = each.value
 
   depends_on = [google_project_service.main]

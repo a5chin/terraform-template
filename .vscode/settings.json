@@ -34,6 +34,12 @@
         "editor.formatOnSaveMode": "file",
         "editor.tabSize": 2
     },
+    "[terraform-test]": {
+        "editor.defaultFormatter": "hashicorp.terraform",
+        "editor.formatOnSave": true,
+        "editor.formatOnSaveMode": "file",
+        "editor.tabSize": 2
+    },
     "[terraform-vars]": {
         "editor.defaultFormatter": "hashicorp.terraform",
         "editor.formatOnSave": true,

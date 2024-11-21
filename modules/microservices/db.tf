@@ -16,7 +16,7 @@ resource "google_sql_database_instance" "main" {
 }
 
 resource "google_sql_database" "main" {
-  name      = var.db.name
+  name      = var.db.database_name
   instance  = google_sql_database_instance.main.name
   charset   = var.db.charset
   collation = var.db.collation

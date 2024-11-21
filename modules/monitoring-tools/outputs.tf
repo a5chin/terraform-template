@@ -4,9 +4,8 @@ output "enabled_apis" {
 }
 
 output "policies" {
-  description = "Alert policies name object."
+  description = "Alert policies name map."
   value = {
-    error = google_monitoring_alert_policy.main["error"].name
-    warn  = google_monitoring_alert_policy.main["warn"].name
+    for k in keys(var.target.alert) : k => google_monitoring_alert_policy.main[k].name
   }
 }
