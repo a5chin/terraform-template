@@ -1,41 +1,31 @@
-FROM debian:bookworm-slim AS builder
-
-# hadolint ignore=DL3008
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release
-
-SHELL [ "/bin/bash", "-o", "pipefail", "-c" ]
-
-# Install gcloud
-# ref: https://cloud.google.com/sdk/docs/install#deb
-RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg \
-    | gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg && \
-    echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" \
-    | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-
-# Install Trivy
-# ref: https://trivy.dev/dev/getting-started/installation/
-RUN curl https://aquasecurity.github.io/trivy-repo/deb/public.key | apt-key add - && \
-    echo "deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" \
-    | tee -a /etc/apt/sources.list.d/trivy.list
-
-# hadolint ignore=DL3008
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    google-cloud-cli \
-    trivy
+ARG BASE_IMAGE=mcr.microsoft.com/vscode/devcontainers/python
+ARG DEBIAN_VERSION=bookworm
+ARG PYTHON_VERSION=3.12
+ARG TRIVY_VERSION=0.57.1
 
 
-FROM mcr.microsoft.com/vscode/devcontainers/base:bookworm
+FROM ghcr.io/aquasecurity/trivy:$TRIVY_VERSION AS trivy
+
+
+FROM $BASE_IMAGE:$PYTHON_VERSION-$DEBIAN_VERSION
+COPY --from=trivy --chown=vscode: /usr/local/bin/trivy /usr/local/bin/trivy
 
 LABEL maintainer="a5chin <a5chin.origin+contact@gmain.com>"
 
-COPY --from=builder --chown=vscode: /usr/bin/python* /usr/bin/python*
-COPY --from=builder --chown=vscode: /usr/bin/gcloud /usr/bin/gcloud
-COPY --from=builder --chown=vscode: /usr/bin/trivy /usr/bin/trivy
-COPY --from=builder --chown=vscode: /usr/lib /usr/lib
+ARG GCLOUD_SDK_VERSION=502.0.0
+ARG TFENV_VERSION=v3.0.0
+
+SHELL [ "/bin/bash", "-o", "pipefail", "-c" ]
+
+RUN if [ "$(uname -m)" = 'aarch64' ]; then _ARCH=arm; else _ARCH=x86_64; fi \
+    && curl -fsS "https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-$GCLOUD_SDK_VERSION-linux-$_ARCH.tar.gz" \
+    | tar zx -C /opt \
+    && /opt/google-cloud-sdk/install.sh \
+    --quiet \
+    --usage-reporting=false \
+    --additional-components alpha beta
+
+RUN git clone --depth=1 -b $TFENV_VERSION https://github.com/tfutils/tfenv.git /opt/tfenv
+
+ENV PATH=$PATH:/opt/google-cloud-sdk/bin
+ENV PATH=$PATH:/opt/tfenv/bin
