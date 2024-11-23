@@ -4,6 +4,7 @@
         "codezombiech.gitignore",
         "eamodio.gitlens",
         "exiasr.hadolint",
+        "hashicorp.terraform",
         "mosapride.zenkaku",
         "ms-azuretools.vscode-docker",
         "ms-vscode-remote.remote-containers",
