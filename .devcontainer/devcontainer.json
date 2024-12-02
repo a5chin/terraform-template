@@ -6,7 +6,7 @@
         "args": {
             "BASE_IMAGE": "mcr.microsoft.com/vscode/devcontainers/python",
             "DEBIAN_VERSION": "bookworm",
-            "GCLOUD_SDK_VERSION": "501.0.0",
+            "GCLOUD_SDK_VERSION": "502.0.0",
             "PYTHON_VERSION": "3.12",
             "TFENV_VERSION": "v3.0.0",
             "TRIVY_VERSION": "0.57.1"
