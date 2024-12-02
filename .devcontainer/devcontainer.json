@@ -2,12 +2,17 @@
     "name": "Terraform",
     "build": {
         "context": "..",
-        "dockerfile": "Dockerfile"
+        "dockerfile": "Dockerfile",
+        "args": {
+            "BASE_IMAGE": "mcr.microsoft.com/vscode/devcontainers/python",
+            "DEBIAN_VERSION": "bookworm",
+            "GCLOUD_SDK_VERSION": "502.0.0",
+            "PYTHON_VERSION": "3.12",
+            "TFENV_VERSION": "v3.0.0",
+            "TRIVY_VERSION": "0.57.1"
+        }
     },
     "features": {
-        "terraform": {
-            "version": "1.9.8"
-        },
         "ghcr.io/devcontainers-extra/features/pre-commit:2": {},
         "ghcr.io/devcontainers-extra/features/terraform-docs:1": {},
         "ghcr.io/dhoeric/features/hadolint:1": {}
@@ -16,28 +21,19 @@
         "vscode": {
             "extensions": [
                 "aquasecurityofficial.trivy-vulnerability-scanner",
-                "codezombiech.gitignore",
-                "eamodio.gitlens",
                 "exiasr.hadolint",
+                "hashicorp.terraform",
                 "mosapride.zenkaku",
                 "ms-azuretools.vscode-docker",
-                "oderwat.indent-rainbow",
-                "pkief.material-icon-theme",
                 "redhat.vscode-yaml",
-                "shardulm94.trailing-spaces",
-                "usernamehw.errorlens",
-                "yzhang.markdown-all-in-one"
-            ],
-            "settings": {
-                "terminal.integrated.defaultProfile.linux": "zsh",
-                "terminal.integrated.profiles.linux": {
-                    "zsh": {
-                        "path": "/bin/zsh"
-                    }
-                }
-            }
+                "shardulm94.trailing-spaces"
+            ]
         }
     },
-    "postStartCommand": "pre-commit install",
+    "containerEnv": {
+        "DISPLAY": "dummy",
+        "PYTHONUNBUFFERED": "True"
+    },
+    "postCreateCommand": "pre-commit install",
     "remoteUser": "vscode"
 }
