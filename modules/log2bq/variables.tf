@@ -1,3 +1,8 @@
+variable "project_id" {
+  description = "The ID of the Project"
+  type        = string
+}
+
 variable "bigquery" {
   description = "The bigquery settings"
   type = object({

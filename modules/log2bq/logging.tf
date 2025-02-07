@@ -1,6 +1,6 @@
-resource "google_logging_project_sink" "main" {
+resource "google_logging_project_sink" "this" {
   name        = "${var.logging.target}-to-bigquery-sink"
-  destination = "bigquery.googleapi.com/${google_bigquery_dataset.main.id}"
+  destination = "bigquery.googleapi.com/${google_bigquery_dataset.this.id}"
   filter      = var.logging.filter
 
   bigquery_options {
@@ -10,8 +10,8 @@ resource "google_logging_project_sink" "main" {
   unique_writer_identity = true
 }
 
-resource "google_project_iam_member" "main" {
-  project = data.google_project.main.project_id
+resource "google_project_iam_member" "this" {
+  project = var.project_id
   role    = "roles/bigquery.dataEditor"
-  member  = google_logging_project_sink.main.writer_identity
+  member  = google_logging_project_sink.this.writer_identity
 }
