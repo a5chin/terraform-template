@@ -1,4 +1,4 @@
-resource "google_monitoring_notification_channel" "main" {
+resource "google_monitoring_notification_channel" "this" {
   for_each = var.target.alert
 
   display_name = upper(each.key)

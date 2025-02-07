@@ -1,4 +1,4 @@
-resource "google_monitoring_alert_policy" "main" {
+resource "google_monitoring_alert_policy" "this" {
   for_each = var.target.alert
 
   project = var.project_id
