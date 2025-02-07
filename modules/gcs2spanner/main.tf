@@ -10,6 +10,8 @@ locals {
   ])
 }
 
+data "google_project" "this" {}
+
 resource "google_project_service" "this" {
   for_each = local.apis
 
