@@ -1,12 +1,12 @@
 resource "google_compute_network" "dataflow" {
-  project = data.google_project.main.project_id
+  project = data.google_project.this.project_id
 
   name                    = var.vpc.network.name
   auto_create_subnetworks = false
 }
 
 resource "google_compute_subnetwork" "dataflow" {
-  project = data.google_project.main.project_id
+  project = data.google_project.this.project_id
   region  = var.location
 
   name                       = var.vpc.subnetwork.name

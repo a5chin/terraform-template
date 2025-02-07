@@ -6,7 +6,7 @@ locals {
   ])
 }
 
-resource "google_cloudfunctions2_function" "main" {
+resource "google_cloudfunctions2_function" "this" {
   project  = var.project_id
   location = var.location
 
@@ -56,7 +56,7 @@ resource "google_cloudfunctions2_function" "main" {
 
   depends_on = [
     google_project_iam_member.event,
-    google_project_service.main,
+    google_project_service.this,
   ]
 }
 
@@ -69,7 +69,7 @@ resource "google_storage_bucket" "functions" {
   public_access_prevention    = "enforced"
   uniform_bucket_level_access = true
 
-  depends_on = [google_project_service.main]
+  depends_on = [google_project_service.this]
 }
 
 data "archive_file" "functions" {
@@ -83,14 +83,14 @@ resource "google_storage_bucket_object" "functions" {
   source = data.archive_file.functions.output_path
   bucket = var.functions.bucket
 
-  depends_on = [google_project_service.main]
+  depends_on = [google_project_service.this]
 }
 
 resource "google_service_account" "functions" {
   account_id   = var.functions.sa.id
   display_name = "The service account for the Cloud Functions"
 
-  depends_on = [google_project_service.main]
+  depends_on = [google_project_service.this]
 }
 
 resource "google_project_iam_member" "functions" {
@@ -100,5 +100,5 @@ resource "google_project_iam_member" "functions" {
   project = var.project_id
   role    = each.value
 
-  depends_on = [google_project_service.main]
+  depends_on = [google_project_service.this]
 }
