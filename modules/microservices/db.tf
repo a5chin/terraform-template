@@ -1,4 +1,4 @@
-resource "google_sql_database_instance" "main" {
+resource "google_sql_database_instance" "this" {
   name             = var.db.instance_name
   database_version = "MYSQL_8_0"
 
@@ -7,7 +7,7 @@ resource "google_sql_database_instance" "main" {
 
     ip_configuration {
       ipv4_enabled    = false
-      private_network = google_compute_network.main.self_link
+      private_network = google_compute_network.this.self_link
       ssl_mode        = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
     }
   }
@@ -15,15 +15,15 @@ resource "google_sql_database_instance" "main" {
   deletion_protection = false
 }
 
-resource "google_sql_database" "main" {
+resource "google_sql_database" "this" {
   name      = var.db.database_name
-  instance  = google_sql_database_instance.main.name
+  instance  = google_sql_database_instance.this.name
   charset   = var.db.charset
   collation = var.db.collation
 }
 
-resource "google_sql_user" "main" {
+resource "google_sql_user" "this" {
   name     = var.backend.env.DB_USER
-  instance = google_sql_database_instance.main.name
+  instance = google_sql_database_instance.this.name
   password = var.backend.env.DB_PWD
 }

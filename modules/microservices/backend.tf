@@ -9,7 +9,7 @@ resource "google_cloud_run_v2_service" "backend" {
     }
 
     vpc_access {
-      connector = google_vpc_access_connector.main.id
+      connector = google_vpc_access_connector.this.id
       egress    = "PRIVATE_RANGES_ONLY"
     }
 
@@ -61,8 +61,8 @@ resource "google_cloud_run_v2_service" "backend" {
   }
 
   depends_on = [
-    google_project_service.main,
-    google_sql_user.main,
+    google_project_service.this,
+    google_sql_user.this,
   ]
 }
 
