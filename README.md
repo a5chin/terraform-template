@@ -132,6 +132,19 @@ terraform-docs markdown table --output-file README.md --output-mode inject /path
 │   ├── gcs2spanner
 │   │   ├── README.md
 │   │   ├── architecture.drawio.svg
+│   │   ├── functoins.tf
+│   │   ├── main.tf
+│   │   ├── main.tftest.hcl
+│   │   ├── outputs.tf
+│   │   ├── provider.tf
+│   │   ├── scheduler.tf
+│   │   ├── src
+│   │   │   ├── main.py
+│   │   │   └── requirements.txt
+│   │   ├── variables.tf
+│   ├── gcs2spanner
+│   │   ├── README.md
+│   │   ├── architecture.drawio.svg
 │   │   ├── dataflow.tf
 │   │   ├── functoins.tf
 │   │   ├── gcs.tf
