@@ -10,12 +10,12 @@ locals {
   ])
 }
 
-data "google_project" "main" {}
+data "google_project" "this" {}
 
-resource "google_project_service" "main" {
+resource "google_project_service" "this" {
   for_each = local.apis
 
-  project            = data.google_project.main.project_id
+  project            = var.project_id
   service            = each.value
   disable_on_destroy = false
 }

@@ -1,9 +1,5 @@
 locals {
   filename = "00000.zip"
-  functions_roles = toset([
-    "roles/iam.serviceAccountUser",
-    "roles/dataflow.developer"
-  ])
 }
 
 resource "google_cloudfunctions2_function" "this" {
@@ -13,8 +9,8 @@ resource "google_cloudfunctions2_function" "this" {
   name = var.functions.name
 
   build_config {
-    runtime     = "python310"
-    entry_point = "create"
+    runtime     = var.functions.runtime
+    entry_point = var.functions.entry_point
     source {
       storage_source {
         bucket = google_storage_bucket_object.functions.bucket
@@ -30,32 +26,18 @@ resource "google_cloudfunctions2_function" "this" {
     timeout_seconds                  = var.functions.timeout_seconds
     max_instance_request_concurrency = var.functions.max_instance_request_concurrency
     available_cpu                    = var.functions.available_cpu
-    environment_variables            = local.environment_variables
+    environment_variables            = var.functions.environment_variables
     ingress_settings                 = "ALLOW_INTERNAL_ONLY"
     service_account_email            = google_service_account.functions.email
-  }
-
-  event_trigger {
-    trigger_region        = var.location
-    event_type            = "google.cloud.storage.object.v1.finalized"
-    retry_policy          = "RETRY_POLICY_RETRY"
-    service_account_email = google_service_account.event.email
-
-    event_filters {
-      attribute = "bucket"
-      value     = google_storage_bucket.data.name
-    }
   }
 
   lifecycle {
     ignore_changes = [
       build_config[0].docker_repository,
-      service_config[0].environment_variables["LOG_EXECUTION_ID"]
     ]
   }
 
   depends_on = [
-    google_project_iam_member.event,
     google_project_service.this,
   ]
 }
@@ -79,7 +61,7 @@ data "archive_file" "functions" {
 }
 
 resource "google_storage_bucket_object" "functions" {
-  name   = "gcs2spanner/${local.filename}"
+  name   = "functions-scheduler/${local.filename}"
   source = data.archive_file.functions.output_path
   bucket = var.functions.bucket
 
@@ -94,7 +76,7 @@ resource "google_service_account" "functions" {
 }
 
 resource "google_project_iam_member" "functions" {
-  for_each = local.functions_roles
+  for_each = var.functions.sa.roles
   member   = "serviceAccount:${google_service_account.functions.email}"
 
   project = var.project_id

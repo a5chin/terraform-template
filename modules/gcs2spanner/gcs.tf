@@ -23,7 +23,7 @@ resource "google_storage_bucket" "data" {
     }
   }
 
-  depends_on = [google_project_service.main]
+  depends_on = [google_project_service.this]
 }
 
 resource "google_storage_bucket_iam_member" "data" {
@@ -35,5 +35,5 @@ resource "google_storage_bucket_iam_member" "data" {
 
   bucket = google_storage_bucket.data.name
 
-  depends_on = [google_project_service.main]
+  depends_on = [google_project_service.this]
 }

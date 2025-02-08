@@ -1,6 +1,6 @@
 locals {
   environment_variables = {
-    PROJECT_ID            = data.google_project.main.project_id
+    PROJECT_ID            = var.project_id
     REGION                = var.location
     JOB_NAME              = var.dataflow.name
     GCS_PATH              = var.dataflow.gcsPath
@@ -23,7 +23,7 @@ resource "google_service_account" "dataflow" {
   account_id   = var.dataflow.sa.id
   display_name = "The service account for the Dataflow"
 
-  depends_on = [google_project_service.main]
+  depends_on = [google_project_service.this]
 }
 
 resource "google_project_iam_member" "dataflow" {
@@ -33,5 +33,5 @@ resource "google_project_iam_member" "dataflow" {
   project = var.project_id
   role    = each.value
 
-  depends_on = [google_project_service.main]
+  depends_on = [google_project_service.this]
 }

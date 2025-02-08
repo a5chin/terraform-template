@@ -32,8 +32,8 @@ run "valid_threshold" {
   command = plan
 
   assert {
-    condition     = google_monitoring_alert_policy.main["error"].conditions[0].condition_threshold[0].threshold_value == 0.9
-    error_message = "`google_monitoring_alert_policy.main.conditions.condition_threshold.threshold_value` is invalid"
+    condition     = google_monitoring_alert_policy.this["error"].conditions[0].condition_threshold[0].threshold_value == 0.9
+    error_message = "`google_monitoring_alert_policy.this.conditions.condition_threshold.threshold_value` is invalid"
   }
 }
 
@@ -70,8 +70,8 @@ run "valid_base_value" {
   command = plan
 
   assert {
-    condition     = google_monitoring_alert_policy.main["warn"].conditions[0].condition_threshold[0].threshold_value == 11
-    error_message = "`google_monitoring_alert_policy.main.conditions.condition_threshold.threshold_value` is invalid"
+    condition     = google_monitoring_alert_policy.this["warn"].conditions[0].condition_threshold[0].threshold_value == 11
+    error_message = "`google_monitoring_alert_policy.this.conditions.condition_threshold.threshold_value` is invalid"
   }
 }
 
@@ -106,7 +106,7 @@ run "valid_no_filter" {
   command = plan
 
   assert {
-    condition     = google_monitoring_alert_policy.main["error"].project == var.project_id
+    condition     = google_monitoring_alert_policy.this["error"].project == var.project_id
     error_message = "`var.target.filter` is not optional."
   }
 }

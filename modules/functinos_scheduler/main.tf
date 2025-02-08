@@ -1,9 +1,10 @@
 locals {
   apis = toset([
-    "monitoring.googleapis.com",
+    "cloudfunctions.googleapis.com",
+    "cloudscheduler.googleapis.com",
+    "iam.googleapis.com",
   ])
 }
-
 
 resource "google_project_service" "this" {
   for_each = local.apis

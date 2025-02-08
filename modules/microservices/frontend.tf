@@ -62,7 +62,7 @@ resource "google_cloud_run_v2_service" "frontend" {
   }
 
   depends_on = [
-    google_project_service.main,
+    google_project_service.this,
   ]
 }
 

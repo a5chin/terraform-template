@@ -1,5 +1,5 @@
 variable "project_id" {
-  description = "The ID of Google Cloud Platform."
+  description = "The ID of Google Cloud Platform"
   type        = string
 }
 
