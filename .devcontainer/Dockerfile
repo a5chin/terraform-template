@@ -1,8 +1,14 @@
 ARG BASE_IMAGE=mcr.microsoft.com/vscode/devcontainers/python
 ARG DEBIAN_VERSION=bookworm
 ARG PYTHON_VERSION=3.12
-ARG TRIVY_VERSION=0.57.1
+ARG TENV_VERSION=latest
+ARG TFLINT_VERSION=v0.55.1
+ARG TRIVY_VERSION=latest
 
+
+FROM tofuutils/tenv:$TENV_VERSION AS tenv
+
+FROM ghcr.io/terraform-linters/tflint:$TFLINT_VERSION AS tflint
 
 FROM ghcr.io/aquasecurity/trivy:$TRIVY_VERSION AS trivy
 
@@ -10,7 +16,6 @@ FROM ghcr.io/aquasecurity/trivy:$TRIVY_VERSION AS trivy
 FROM python:$PYTHON_VERSION-slim-$DEBIAN_VERSION AS builder
 
 ARG GCLOUD_SDK_VERSION=502.0.0
-ARG TFENV_VERSION=v3.0.0
 
 SHELL [ "/bin/bash", "-o", "pipefail", "-c" ]
 
@@ -29,16 +34,15 @@ RUN if [ "$(uname -m)" = 'aarch64' ]; then _ARCH=arm; else _ARCH=x86_64; fi \
     --usage-reporting=false \
     --additional-components alpha beta
 
-RUN git clone --depth=1 -b $TFENV_VERSION https://github.com/tfutils/tfenv.git /opt/tfenv
-
 
 FROM $BASE_IMAGE:$PYTHON_VERSION-$DEBIAN_VERSION
 
-COPY --from=trivy --chown=vscode: /usr/local/bin/trivy /usr/local/bin/trivy
 COPY --from=builder --chown=vscode: /opt/google-cloud-sdk /opt/google-cloud-sdk
-COPY --from=builder --chown=vscode: /opt/tfenv /opt/tfenv
+COPY --from=tflint --chown=vscode: /usr/local/bin/tflint /usr/local/bin/tflint
+COPY --from=trivy --chown=vscode: /usr/local/bin/trivy /usr/local/bin/trivy
+COPY --from=tenv /usr/local/bin/tenv /usr/local/bin/tenv
+COPY --from=tenv /usr/local/bin/terraform /usr/local/bin/terraform
 
 LABEL maintainer="a5chin <a5chin.origin+contact@gmain.com>"
 
 ENV PATH=$PATH:/opt/google-cloud-sdk/bin
-ENV PATH=$PATH:/opt/tfenv/bin
