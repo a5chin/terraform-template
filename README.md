@@ -64,7 +64,7 @@ Specifically, you can solve this problem by following the steps below.
     - [usernamehw.errorlens](https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens)
     - [yzhang.markdown-all-in-one](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
 - `Dockerfile`
-    - tfenv
+    - tenv
     - trivy
     - google cloud
 
@@ -195,5 +195,6 @@ terraform-docs markdown table --output-file README.md --output-mode inject /path
 ├── .gitignore
 ├── .pre-commit-config.yaml
 ├── .tflint.hcl
+├── .tool-versions
 └── README.md
 ```

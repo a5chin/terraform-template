@@ -29,10 +29,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Extract Terraform version
+        run: echo "TERRAFORM_VERSION=$(grep '^terraform ' .tool-versions | awk '{print $2}')" >> $GITHUB_ENV
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.9.8
+          terraform_version: ${{ env.TERRAFORM_VERSION }}
 
       - name: Terraform fmt
         run: terraform fmt -check -recursive
