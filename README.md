@@ -129,6 +129,19 @@ terraform-docs markdown table --output-file README.md --output-mode inject /path
 │       ├── provider.tf
 │       └── versions.tf
 └── modules
+│   ├── functions_scheduler
+│   │   ├── README.md
+│   │   ├── architecture.drawio.svg
+│   │   ├── functions.tf
+│   │   ├── main.tf
+│   │   ├── main.tftest.hcl
+│   │   ├── outputs.tf
+│   │   ├── provider.tf
+│   │   ├── scheduler.tf
+│   │   ├── src
+│   │   │   ├── main.py
+│   │   │   └── requirements.txt
+│   │   └── variables.tf
 │   ├── gcs2spanner
 │   │   ├── README.md
 │   │   ├── architecture.drawio.svg
@@ -182,14 +195,24 @@ terraform-docs markdown table --output-file README.md --output-mode inject /path
 │   │   ├── provider.tf
 │   │   ├── variables.tf
 │   │   └── vpc.tf
-│   └── monitoring-tools
+│   ├── monitoring-tools
+│   │   ├── README.md
+│   │   ├── alert.tf
+│   │   ├── channel.tf
+│   │   ├── main.tf
+│   │   ├── main.tftest.hcl
+│   │   ├── outputs.tf
+│   │   ├── provider.tf
+│   │   └── variables.tf
+│   └── workload-identity
 │       ├── README.md
-│       ├── alert.tf
-│       ├── channel.tf
 │       ├── main.tf
 │       ├── main.tftest.hcl
 │       ├── outputs.tf
+│       ├── pool.tf
+│       ├── pool_provider.tf
 │       ├── provider.tf
+│       ├── sa.tf
 │       └── variables.tf
 ├── .dockerignore
 ├── .gitignore

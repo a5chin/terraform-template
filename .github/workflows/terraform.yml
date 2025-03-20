@@ -12,6 +12,7 @@ jobs:
 
     outputs:
       matrix: ${{ steps.extract_modules.outputs.matrix }}
+      terraform-version: ${{ steps.extract-terraform-version.outputs.TERRAFORM_VERSION }}
 
     steps:
       - name: Checkout
@@ -22,20 +23,23 @@ jobs:
         run: |
           echo "matrix=$(ls modules | jq -R -s -c '{ "modules": split("\n")[:-1] }')" > $GITHUB_OUTPUT
 
+      - name: Extract Terraform Version
+        id: extract-terraform-version
+        run: echo "TERRAFORM_VERSION=$(grep '^terraform ' .tool-versions | awk '{print $2}')" > $GITHUB_OUTPUT
+
   format:
     runs-on: ubuntu-latest
+
+    needs: [setup]
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Extract Terraform version
-        run: echo "TERRAFORM_VERSION=$(grep '^terraform ' .tool-versions | awk '{print $2}')" >> $GITHUB_ENV
-
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: ${{ env.TERRAFORM_VERSION }}
+          terraform_version: ${{ needs.setup.outputs.TERRAFORM_VERSION }}
 
       - name: Terraform fmt
         run: terraform fmt -check -recursive
@@ -86,7 +90,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.9.8
+          terraform_version: ${{ needs.setup.outputs.TERRAFORM_VERSION }}
 
       - name: Run terraform test
         run: |
@@ -113,7 +117,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.9.8
+          terraform_version: ${{ needs.setup.outputs.TERRAFORM_VERSION }}
 
       - name: Terraform validate
         run: |
