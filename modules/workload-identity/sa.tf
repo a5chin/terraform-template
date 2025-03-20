@@ -25,4 +25,8 @@ resource "google_service_account_iam_member" "this" {
   service_account_id = each.value.service_account_id
 
   role = "roles/iam.workloadIdentityUser"
+
+  depends_on = [
+    google_project_service.this,
+  ]
 }

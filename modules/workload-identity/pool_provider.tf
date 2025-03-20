@@ -31,4 +31,8 @@ resource "google_iam_workload_identity_pool_provider" "this" {
   lifecycle {
     ignore_changes = [oidc]
   }
+
+  depends_on = [
+    google_project_service.this,
+  ]
 }

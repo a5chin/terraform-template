@@ -1,6 +1,7 @@
 locals {
   apis = toset([
     "cloudresourcemanager.googleapis.com",
+    "iam.googleapis.com",
   ])
 }
 
