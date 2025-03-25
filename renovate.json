@@ -1,0 +1,13 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "branchPrefix": "renovate/",
+    "extends": [
+        "config:base"
+    ],
+    "rebaseWhen": "behind-base-branch",
+    "schedule": [
+        "* 0-23 * * *"
+    ],
+    "separateMajorMinor": false,
+    "timezone": "Asia/Tokyo"
+}
