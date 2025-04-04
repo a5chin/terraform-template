@@ -3,4 +3,4 @@ functions-framework>=3.8.0
 google-auth==2.38.0
 google-cloud-logging==3.11.4
 pytest==8.3.5
-requests==2.20.0
+requests==2.32.3
