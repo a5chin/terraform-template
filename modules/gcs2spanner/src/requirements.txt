@@ -2,5 +2,5 @@ cloudevents>=1.10.0
 functions-framework>=3.8.0
 google-auth==2.40.3
 google-cloud-logging==3.12.1
-pytest==8.4.0
+pytest==8.4.1
 requests==2.32.4
