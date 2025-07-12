@@ -2,7 +2,7 @@ ARG BASE_IMAGE=mcr.microsoft.com/vscode/devcontainers/python
 ARG DEBIAN_VERSION=bookworm
 ARG PYTHON_VERSION=3.12
 ARG TENV_VERSION=latest
-ARG TFLINT_VERSION=v0.58.0
+ARG TFLINT_VERSION=v0.58.1
 ARG TRIVY_VERSION=latest
 
 
